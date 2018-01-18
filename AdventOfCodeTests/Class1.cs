@@ -7,5 +7,6 @@ namespace AdventOfCodeTests
 {
     public class Class1
     {
+
     }
 }
