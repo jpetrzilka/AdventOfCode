@@ -6,14 +6,8 @@ namespace AdventOfCode.Day02
 {
     public class Solution
     {
-        public long GetResult1(string input)
-        {
-            return CalculateChecksum(input, MinMaxProcessing);
-        }
-        public long GetResult2(string input)
-        {
-            return CalculateChecksum(input, EvenDivision);
-        }
+        public long GetResult1(string input) => CalculateChecksum(input, MinMaxCalculation);
+        public long GetResult2(string input) => CalculateChecksum(input, EvenDivisionCalcultaion);
 
         long CalculateChecksum(string input, Func<IEnumerable<long>, long> checksumCalculation)
         {
@@ -24,15 +18,17 @@ namespace AdventOfCode.Day02
                     StringSplitOptions.RemoveEmptyEntries)
                 .Select(line => line
                     .Trim()
-                    .Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Split(
+                        new char[] { ' ', '\t' },
+                        StringSplitOptions.RemoveEmptyEntries)
                     .Select(number => long.Parse(number)))
                 .Sum(checksumCalculation);
         }
 
-        long MinMaxProcessing(IEnumerable<long> numbers)
+        long MinMaxCalculation(IEnumerable<long> numbers)
             => numbers.Max() - numbers.Min();
 
-        long EvenDivision(IEnumerable<long> numbers)
+        long EvenDivisionCalcultaion(IEnumerable<long> numbers)
         {
             foreach (var number in numbers)
                 foreach (var divisor in numbers)
