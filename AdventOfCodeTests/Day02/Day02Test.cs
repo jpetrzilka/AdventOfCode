@@ -1,9 +1,4 @@
 ﻿using AdventOfCode.Day02;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AdventOfCodeTests.Day02
@@ -21,6 +16,19 @@ namespace AdventOfCodeTests.Day02
             var sut = new Solution();
 
             Assert.Equal(18, sut.GetResult1(input));
+        }
+
+        [Fact]
+        public void TestSecondPart()
+        {
+            string input =
+                @"5 9 2 8
+                9 4 7 3
+                3 8 6 5";
+
+            var sut = new Solution();
+
+            Assert.Equal(9, sut.GetResult2(input));
         }
     }
 }
