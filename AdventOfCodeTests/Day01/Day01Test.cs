@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using AdventOfCode.Day01;
 using Xunit;
-using System.Text;
-using AdventOfCode.Day01;
 
 namespace AdventOfCodeTests.Day01
 {
