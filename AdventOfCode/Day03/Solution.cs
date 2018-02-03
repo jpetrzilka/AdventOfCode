@@ -8,11 +8,11 @@ namespace AdventOfCode.Day03
     {
         public long GetResult1(int input)
         {
-            (int x, int y) = GetNextPosition(input);
+            (int x, int y) = GetPositionCoordinates(input);
             return Math.Abs(x) + Math.Abs(y);
         }
 
-        (int x, int y) GetNextPosition(int targetPosition)
+        (int x, int y) GetPositionCoordinates(int targetPosition)
         {
             int x = 0, y = 0, stepSize = 1, position = 1;
             Direction currentDirection = Direction.Right;
@@ -62,8 +62,7 @@ namespace AdventOfCode.Day03
             }
         }
 
-
-        public long GetResult2(string input) => throw new NotImplementedException();
+        public long GetResult2(int input) => throw new NotImplementedException();
 
         enum Direction
         {

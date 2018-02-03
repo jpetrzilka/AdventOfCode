@@ -12,7 +12,7 @@ namespace AdventOfCode
             const string Input = @"289326";
 
             var finalSolution = new Day03.Solution();
-            Console.WriteLine(finalSolution.GetResult(289326));
+            //Console.WriteLine(finalSolution.GetResult(289326));
             Console.ReadLine();
         }
     }

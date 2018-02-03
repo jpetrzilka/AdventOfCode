@@ -16,16 +16,15 @@ namespace AdventOfCodeTests.Day03
             Assert.Equal(expectedOutput, sut.GetResult1(input));
         }
 
-        [Fact]
-        public void TestSecondPart()
+        [Theory]
+        [InlineData(1, 1)]
+        [InlineData(2, 1)]
+        [InlineData(3, 2)]
+        [InlineData(4, 4)]
+        [InlineData(5, 5)]
+        public void TestSecondPart(int input, int expectedOutput)
         {
-            string input =
-                @"5 9 2 8
-                9 4 7 3
-                3 8 6 5";
-
             var sut = new Solution();
-
             Assert.Equal(9, sut.GetResult2(input));
         }
     }
