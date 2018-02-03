@@ -9,10 +9,8 @@ namespace AdventOfCode
     {
         static void Main(string[] args)
         {
-            const string Input = @"289326";
-
             var finalSolution = new Day03.Solution();
-            //Console.WriteLine(finalSolution.GetResult(289326));
+            Console.WriteLine(finalSolution.GetResult2(289326));
             Console.ReadLine();
         }
     }

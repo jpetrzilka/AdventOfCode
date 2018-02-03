@@ -4,65 +4,94 @@ using System.Linq;
 
 namespace AdventOfCode.Day03
 {
-    public class Solution
+    public partial class Solution
     {
+        List<Position> spiralGrid;
+        Func<bool> stopCondition;
+
         public long GetResult1(int input)
         {
-            (int x, int y) = GetPositionCoordinates(input);
-            return Math.Abs(x) + Math.Abs(y);
+            stopCondition = () => spiralGrid.Last().positionIndex == input; 
+            var lastPosition = GenerateSpiralGrid(input).Last();
+            return Math.Abs(lastPosition.x) + Math.Abs(lastPosition.y);
         }
 
-        (int x, int y) GetPositionCoordinates(int targetPosition)
+        public long GetResult2(int input)
         {
-            int x = 0, y = 0, stepSize = 1, position = 1;
+            stopCondition = () => spiralGrid.Last().value > input;
+            var lastPosition = GenerateSpiralGrid(input).Last();
+            return lastPosition.value;
+        }
+
+        List<Position> GenerateSpiralGrid(int targetPosition)
+        {
+            spiralGrid = new List<Position>() { new Position(0, 0, 1, 1) };
+            int stepSize = 1;
             Direction currentDirection = Direction.Right;
 
-            while (position <= targetPosition)
+            while (!stopCondition())
             {
-                for (int i = 0; i < stepSize; i++)
-                {
-                    if (position == targetPosition)
-                        return (x, y);
+                DoStepsInDirecion(stepSize, currentDirection);
+                currentDirection = GetNextDirection(currentDirection);
 
-                    (x, y) = MoveInDirection(x, y, currentDirection);
-                    position++;
-                }
-                currentDirection = (Direction)(((int)currentDirection + 1) % 4);
-
-                for (int i = 0; i < stepSize; i++)
-                {
-                    if (position == targetPosition)
-                        return (x, y);
-
-                    (x, y) = MoveInDirection(x, y, currentDirection);
-                    position++;
-                }
-                currentDirection = (Direction)(((int)currentDirection + 1) % 4);
+                DoStepsInDirecion(stepSize, currentDirection);
+                currentDirection = GetNextDirection(currentDirection);
 
                 stepSize++;
             }
 
-            return (x, y);
+            return spiralGrid;
         }
 
-        (int x, int y) MoveInDirection(int currentX, int currentY, Direction direction)
+        private static Direction GetNextDirection(Direction currentDirection)
+            => (Direction)(((int)currentDirection + 1) % 4);
+
+        void DoStepsInDirecion(int stepSize, Direction currentDirection)
         {
-            switch (direction)
+            for (int i = 0; i < stepSize; i++)
             {
-                case Direction.Right:
-                    return (currentX + 1, currentY);
-                case Direction.Up:
-                    return (currentX, currentY + 1);
-                case Direction.Left:
-                    return (currentX - 1, currentY);
-                case Direction.Down:
-                    return (currentX, currentY - 1);
-                default:
-                    throw new NotSupportedException(direction.ToString());
+                if (stopCondition() == true)
+                    return;
+
+                var newPosition = MoveInDirection(spiralGrid.Last(), currentDirection);
+                spiralGrid.Add(newPosition);
             }
         }
 
-        public long GetResult2(int input) => throw new NotImplementedException();
+        Position MoveInDirection(Position currentPosition, Direction direction)
+        {
+            var position = new Position(currentPosition);
+            position.positionIndex++;
+
+            switch (direction)
+            {
+                case Direction.Right:
+                    position.x++;
+                    break;
+                case Direction.Up:
+                    position.y++;
+                    break;
+                case Direction.Left:
+                    position.x--;
+                    break;
+                case Direction.Down:
+                    position.y--;
+                    break;
+                default:
+                    throw new NotSupportedException(direction.ToString());
+            }
+
+            for (int i = 0; i < spiralGrid.Count; i++)
+            {
+                if (Math.Abs(spiralGrid[i].x - position.x) <= 1
+                    && Math.Abs(spiralGrid[i].y - position.y) <= 1)
+                {
+                    position.value += spiralGrid[i].value;
+                }
+            }
+
+            return position;
+        }
 
         enum Direction
         {
